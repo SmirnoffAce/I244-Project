@@ -1,11 +1,85 @@
 <!DOCTYPE html>
 <html lang="en">
 	<head>
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.0/jquery.min.js"></script>	
+		<script src="js/functions.js"></script>
+		<script>SessionCheck();</script>
+		
 		<link rel="shortcut icon" type="image/x-icon" href="favicon.ico" />
-		<title>VPN console</title>	
+		<!-- 	<link rel="icon" href="logo.png"> -->	
+		<title>VPN console</title>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">	
+		<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/r/bs-3.3.5/jq-2.1.4,dt-1.10.8/datatables.min.css"/>
+		
+		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+		<script type="text/javascript" src="https://cdn.datatables.net/r/bs-3.3.5/jqc-1.11.3,dt-1.10.8/datatables.min.js"></script>
+		<script type="text/javascript" src="js/bootbox.min.js"></script>
+
+			
 		<style>
+			.btn{
+				border-radius: 0px;
+			}
+			.inner-addon{
+				position: relative;
+			}
+			.inner-addon .glyphicon{
+				position: absolute;
+				padding: 10px;
+				pointer-events: none;
+			}
+			.right-addon .glyphicon{
+				right: 0px;
+			}
+			.right-addon input{ 
+				padding-right: 30px; 
+			}
 		</style>
+	
 	</head>
 	<body>
+		<!-- Menu	-->
+		<nav class="navbar navbar-inverse bg-primary">
+			<div class="container">
+				<div class="container-fluid">
+					<div class="navbar-header">
+						<a class="navbar-brand">OpenVpn</a>
+					</div>
+					<ul class="nav navbar-nav">
+						<li class="active"><a data-toggle="tab" href="#certs"><span class="glyphicon glyphicon-duplicate"></span>&nbsp;All certificates</a></li>
+						<li><a data-toggle="tab" href="#activConn"><span class="glyphicon glyphicon-inbox"></span>&nbsp;Active connections</a></li>
+						<li><a data-toggle="tab" href="#serverConf"><span class="glyphicon glyphicon-blackboard"></span>&nbsp;Server configuration</a></li>
+						<li><a data-toggle="tab" href="#logs"><span class="glyphicon glyphicon-time"></span>&nbsp;Logs</a></li>
+					</ul>
+					<ul class="nav navbar-nav navbar-right">
+						<li><a href="#" ><span class="glyphicon glyphicon-log-in"></span>&nbsp;LogOut</a></li>
+					</ul>
+				</div>
+			</div>
+		</nav>
+		
+		<!-- Pages	-->
+		<div class="tab-content">
+			<!-- All crt	-->
+			<div id="certs" class="container tab-pane fade in active">
+			</div>
+			<!-- Active cert	-->
+			<div id="activConn" class="container tab-pane fade">
+			</div>
+			<!-- Server conf	-->
+			<div id="serverConf" class="container tab-pane fade">
+			</div>
+			<!-- Logs	-->
+			<div id="logs" class="container tab-pane fade">
+			</div>
+		</div>
+		
+		<script>
+		
+		</script>
 	</body>
 </html>
