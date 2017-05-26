@@ -1,6 +1,8 @@
 //on load
 function server(){	
 	serverStatus();
+	serverConf();
+
 }
 //session check
 function SessionCheck(){
@@ -44,5 +46,50 @@ function serverStatus(){
 			$('#serverStatus').empty();
 			$('#serverStatus').append("<center><strong>OpenVpn server is running.</center>");
 		}
+	});
+}
+function serverConf(){
+	$.get("script/action.php",{
+		server: "!serverConf!"
+	},function(data){
+		$('#conf').empty();
+		conf = "<br>";
+		var res = JSON.parse(data);
+		$.each(res, function(key, value){
+			conf += value + "<br>";
+		});
+		
+		$('#conf').append(conf);
+	});
+}
+function serverConfModal(){
+	$.get("script/action.php",{
+		server: "!serverConf!"
+	},function(data){
+		conf = "<br>";
+		var res = JSON.parse(data);
+		$.each(res, function(key, value){
+			conf += value + "<br>";
+		});
+		$("#serverEdit").modal();
+		$("#confEdit").empty();
+		$("#confEdit").append(conf);
+	});
+}
+function serverOnOff(arg){
+	$.get("script/action.php",{
+		serverAction: "!serverAction!",
+		status: arg,
+	},function(data){
+		conf = "<br>";
+		var res = JSON.parse(data);
+		$.each(res, function(key, value){
+			conf += value + "<br>";
+		});
+		$('#serverActionStatusRead').empty();
+		$('#serverActionStatusRead').append(conf);
+		$('#serverActionStatus').modal();
+		
+		serverStatus();
 	});
 }

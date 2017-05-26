@@ -77,5 +77,39 @@ class Vpn{
 		return json_encode($json);
 	}
 
-	
+	public function serverAction($status){
+		switch($status){
+			case "restart":
+				$cmd = "restart";
+			break;
+			case "start":
+				$cmd = "start";
+			break;
+			case "stop":
+				$cmd = "stop";
+			break;
+			default:
+				$cmd = "no";
+		}
+		if($cmd != "no"){
+			$command =  "sudo systemctl ". $cmd . " openvpn@server.service";
+			exec($command);
+			exec("sudo systemctl status openvpn@server.service", $output);
+			
+			return json_encode($output);
+		}	
+	}
+	public function readConf(){
+		$content = file($this->config['vpn']['confDir'] . "server.conf");
+		return json_encode($content);
+	}
+	public function writeConf($conf){
+		$serverFile = fopen($this->config['vpn']['confDir'] . "server.conf", 'w');
+		fwrite($serverFile, $conf);
+		fclose($serverFile);
+	}
+	public function serverManagement($cmd){
+		exec("sudo sh " . $this->config['vpn']['bash'] . "management.sh \"" . $cmd . "\"", $output);
+		return json_encode($output);
+	}
 }

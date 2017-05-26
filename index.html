@@ -79,6 +79,23 @@
 			</div>
 			<!-- Server conf	-->
 			<div id="serverConf" class="container tab-pane fade">
+				<div class="row">
+					<div class="col-sm-12" style="margin-bottom:20px;">
+						<h2>Server configuration</h2>
+						<div class="panel panel-default">
+							<div class="panel-body" id="conf"></div>
+						</div>
+						<button class="btn btn-success loading" onclick="serverConfModal();"><span class="glyphicon glyphicon-pencil"></span>&nbsp;Edit configuration</button>
+						&nbsp;
+						<button class="btn btn-success loading" data-toggle="modal" data-target="#serverManagementModal"><span class="glyphicon glyphicon-object-align-bottom"></span>&nbsp;Server management</button>
+						&nbsp;
+						<button class="btn btn-success loading" onclick="serverOnOff('restart');"><span class="glyphicon glyphicon-refresh"></span>&nbsp;Restart server</button>
+						&nbsp;
+						<button class="btn btn-success loading" onclick="serverOnOff('start');"><span class="glyphicon glyphicon-play"></span>&nbsp;Start server</button>
+						&nbsp;
+						<button class="btn btn-success loading" onclick="serverOnOff('stop');"><span class="glyphicon glyphicon-stop"></span>&nbsp;Stop server</button>
+					</div>
+				</div>
 			</div>
 			<!-- Logs	-->
 			<div id="logs" class="container tab-pane fade">
@@ -109,6 +126,79 @@
 						</thead>
 						<tbody></tbody>
 					</table>	
+				</div>
+			</div>
+		</div>
+		
+		<!-- Server Edit Configuration Modal -->
+		<div class="modal fade" id="serverEdit" role="dialog">
+			<div class="modal-dialog">
+			  <!-- Modal content-->
+			  <div class="modal-content" style="border-radius: 0px;">
+					<div class="modal-header">
+						<button type="button" class="close" data-dismiss="modal">&times;</button>
+						<center><h4 class="modal-title"><span class="glyphicon glyphicon-pencil"></span>&nbsp;Edit server configuration</h4></center>
+					</div>
+					<div class="modal-body">
+						<form method="post" action="script/action.php">
+							<div class="form-group">
+								<label for="confEdit">Server confiuration:</label>
+								<textarea class="form-control" rows="20" name="confEdit" id="confEdit"></textarea>
+							</div>
+							<button type="submit" class="btn btn-success" name="reloadConf" value="!writeConf!">Edit</button>
+						</form>
+					</div>
+				</div>
+			</div>
+		</div>
+		<!-- Server Action Status Modal -->
+		<div class="modal fade" id="serverActionStatus" role="dialog">
+			<div class="modal-dialog">
+			  <!-- Modal content-->
+			  <div class="modal-content" style="border-radius: 0px;">
+					<div class="modal-header">
+						<button type="button" class="close" data-dismiss="modal">&times;</button>
+						<center><h4 class="modal-title"><span class="glyphicon glyphicon-file"></span>&nbsp;Status</h4></center>
+					</div>
+					<div class="modal-body">
+						<div class="panel panel-default">
+							<div class="panel-body" id="serverActionStatusRead"></div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<!-- Server Management Modal -->
+		<div class="modal fade" id="serverManagementModal" role="dialog">
+			<div class="modal-dialog">
+			  <!-- Modal content-->
+			  <div class="modal-content" style="border-radius: 0px;">
+					<div class="modal-header">
+						<button type="button" class="close" data-dismiss="modal">&times;</button>
+						<center><h4 class="modal-title"><span class="glyphicon glyphicon-object-align-bottom"></span>&nbsp;Telenet management</h4></center>
+					</div>
+					<div class="modal-body">
+						<div class="container-fluid">
+							<div class="row">
+								<div class="col-sm-10 text-left">									
+									<input type="text" class="form-control" id="cmdServer" name="cmdServer" placeholder="Enter command...">
+								</div>
+								<div class="col-sm-2 text-left">
+									<button type="button" class="btn btn-success"  onclick="sendCmd();"><span class="glyphicon glyphicon-play"></span>&nbsp;Send</button>
+								</div>
+							</div>
+							<br>
+							<div class="row">
+								<div class="col-sm-12 text-left">
+									<div class="panel panel-default">
+										<div class="panel-body" id="serverManagementRead">
+											<p><center>Command result</center></p>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
 				</div>
 			</div>
 		</div>
