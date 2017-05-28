@@ -56,7 +56,7 @@
 						<li><a data-toggle="tab" href="#logs"><span class="glyphicon glyphicon-time"></span>&nbsp;Logs</a></li>
 					</ul>
 					<ul class="nav navbar-nav navbar-right">
-						<li><a href="#" ><span class="glyphicon glyphicon-log-in"></span>&nbsp;LogOut</a></li>
+						<li><a href="script/action.php?exit=1" ><span class="glyphicon glyphicon-log-in"></span>&nbsp;LogOut</a></li>
 					</ul>
 				</div>
 			</div>
@@ -64,8 +64,8 @@
 		
 		<!-- Server Status	-->
 		<div class="container">
-			<div class="alert alert-success alert-dismissable" id="serverStatus">
-				<center><strong>OpenVpn server is running.</strong></center>
+			<div style="text-align:center" class="alert alert-success alert-dismissable" id="serverStatus">
+				<strong>OpenVpn server is running.</strong>
 			</div>
 		</div>
 		
@@ -73,9 +73,53 @@
 		<div class="tab-content">
 			<!-- All crt	-->
 			<div id="certs" class="container tab-pane fade in active">
+				<div class="row">
+					<div class="col-sm-12" >
+						<button type="button" class="btn btn-success loading" onclick="addNewCrt();"><span class="glyphicon glyphicon-pluss"></span>&nbsp;Add new certificate</button>
+					</div>			
+				</div>
+				<br>
+				<div class="row">
+					<div class="col-sm-12" >
+						<table class="table table-hover" id="AllCertTable">
+							<thead>
+								<tr>
+									<th>Certificate</th>
+									<th>Description</th>
+									<th>Ip</th>
+									<th>Created</th>
+									<th>Country</th>
+									<th>City</th>
+									<th>Unit</th>
+									<th>Email</th>
+									<th> </th>
+									<th> </th>
+								</tr>
+							</thead>
+							<tbody>
+							</tbody>
+						</table>		
+					</div>
+				</div>
 			</div>
 			<!-- Active cert	-->
 			<div id="activConn" class="container tab-pane fade">
+				<div class="row">
+					<div class="col-sm-12" >
+						<table class="table table-hover" id="ActiveConnections">
+							<thead>
+								<tr>
+									<th>Certificate</th>
+									<th>Tunnel ip</th>
+									<th>Real ip</th>
+									<th> </th>
+								</tr>
+							</thead>
+							<tbody>
+							</tbody>
+						</table>	
+					</div>
+				</div>
 			</div>
 			<!-- Server conf	-->
 			<div id="serverConf" class="container tab-pane fade">
@@ -129,7 +173,7 @@
 				</div>
 			</div>
 		</div>
-		
+
 		<!-- Server Edit Configuration Modal -->
 		<div class="modal fade" id="serverEdit" role="dialog">
 			<div class="modal-dialog">
@@ -137,7 +181,7 @@
 			  <div class="modal-content" style="border-radius: 0px;">
 					<div class="modal-header">
 						<button type="button" class="close" data-dismiss="modal">&times;</button>
-						<center><h4 class="modal-title"><span class="glyphicon glyphicon-pencil"></span>&nbsp;Edit server configuration</h4></center>
+						<h4 style="text-align:center" class="modal-title"><span class="glyphicon glyphicon-pencil"></span>&nbsp;Edit server configuration</h4>
 					</div>
 					<div class="modal-body">
 						<form method="post" action="script/action.php">
@@ -151,6 +195,59 @@
 				</div>
 			</div>
 		</div>
+		<!-- Add new certificate -->
+		<div class="modal fade" id="newCertificate" role="dialog">
+			<div class="modal-dialog">
+			  <!-- Modal content-->
+			  <div class="modal-content" style="border-radius: 0px;">
+					<div class="modal-header">
+						<button type="button" class="close" data-dismiss="modal">&times;</button>
+						<h4 style="text-align:center" class="modal-title"><span class="glyphicon glyphicon-plus"></span>&nbsp;Add new certificate</h4>
+					</div>
+					<div class="modal-body">
+						<form method="post" action="script/action.php">
+							<div class="form-group">
+								<label for="name">Common name:</label>
+								<div class="inner-addon right-addon">
+									<i class="glyphicon glyphicon-remove" id="checkStatusCert"></i>
+									<input type="text" class="form-control" id="name" name="name" placeholder="Enter common name..." onkeyup="checkCrt(this.value);" required>
+								</div>
+							</div>
+							<div class="form-group">
+								<label for="name">Description:</label>
+								<input type="text" class="form-control" id="desc" name="desc" placeholder="Enter comment..." required>
+							</div>
+							<div class="form-group">
+								<label for="name">Country (Estonia):</label>
+								<input type="text" class="form-control" id="country" name="country" placeholder="Enter country..." required>
+							</div>
+							<div class="form-group">
+								<label for="name">Province (Harjumaa):</label>
+								<input type="text" class="form-control" id="province" name="province" placeholder="Enter province..." required>
+							</div>
+							<div class="form-group">
+								<label for="name">City (Tallinn):</label>
+								<input type="text" class="form-control" id="city" name="city" placeholder="Enter city..." required>
+							</div>
+							<div class="form-group">
+								<label for="name">Organizational Unit Name (Administrator):</label>
+								<input type="text" class="form-control" id="unit" name="unit" placeholder="Enter unit..." required>
+							</div>
+							<div class="form-group">
+								<label for="name">Email:</label>
+								<input type="email" class="form-control" id="email" name="email" placeholder="Enter email..." required>
+							</div>						
+							<div class="form-group">
+								<label for="ip">Certificate with&nbsp;-&nbsp;</label>
+								<label class="radio-inline"><input type="radio" name="ip" value="dynamic" id="ip" checked="checked">Dynamic ip</label>
+								<label class="radio-inline"><input type="radio" name="ip" value="static" id="staticIp">Static ip (<b style="color:#008000;" id="freeIps"></b>)</label>
+							</div>
+							<button type="submit" class="btn btn-success" id="addNewCertificate" name="addNewCertificate" value="!addNewCert!" disabled>Add new certificate</button>
+						</form>
+					</div>
+				</div>
+			</div>
+		</div>
 		<!-- Server Action Status Modal -->
 		<div class="modal fade" id="serverActionStatus" role="dialog">
 			<div class="modal-dialog">
@@ -158,7 +255,7 @@
 			  <div class="modal-content" style="border-radius: 0px;">
 					<div class="modal-header">
 						<button type="button" class="close" data-dismiss="modal">&times;</button>
-						<center><h4 class="modal-title"><span class="glyphicon glyphicon-file"></span>&nbsp;Status</h4></center>
+						<h4 style="text-align:center" class="modal-title"><span class="glyphicon glyphicon-file"></span>&nbsp;Status</h4>
 					</div>
 					<div class="modal-body">
 						<div class="panel panel-default">
@@ -175,7 +272,7 @@
 			  <div class="modal-content" style="border-radius: 0px;">
 					<div class="modal-header">
 						<button type="button" class="close" data-dismiss="modal">&times;</button>
-						<center><h4 class="modal-title"><span class="glyphicon glyphicon-object-align-bottom"></span>&nbsp;Telenet management</h4></center>
+						<h4 style="text-align:center" class="modal-title"><span class="glyphicon glyphicon-object-align-bottom"></span>&nbsp;Telenet management</h4>
 					</div>
 					<div class="modal-body">
 						<div class="container-fluid">
@@ -191,8 +288,8 @@
 							<div class="row">
 								<div class="col-sm-12 text-left">
 									<div class="panel panel-default">
-										<div class="panel-body" id="serverManagementRead">
-											<p><center>Command result</center></p>
+										<div style="text-align:center" class="panel-body" id="serverManagementRead">
+											<p>Command result</p>
 										</div>
 									</div>
 								</div>
@@ -207,10 +304,14 @@
 			window.onload = function(){
 				server();
 			}
+			
 			window.setInterval(function(){
 				serverStatus();
 				SessionCheck();
 			}, 15000);
+			window.setInterval(function(){
+				onlineCert();
+			}, 50000);
 		</script>
 	</body>
 </html>
